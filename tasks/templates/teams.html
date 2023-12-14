@@ -1,0 +1,60 @@
+{% extends 'base_content.html' %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1>Welcome to your Teams Page {{user.username }}</h1>
+
+            <br><br>
+
+            <div class="mb-4">
+                {% for instance in teams %}
+                <div class="card shadow-sm border-0 rounded-lg mb-4">
+                        <div class="card-header bg-dark text-white">
+                            <h5 class="card-title font-weight-bold">{{instance.name}}</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"><small class="text-muted">{{instance.description}}</small></p>
+                            <ul class="list-group list-group-flush">
+                                {% for user in instance.members.all %}
+                                    <li class="list-group-item">{{ user.first_name }} {{ user.last_name }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="mb-4">
+                <a href='{% url 'create_team' %}' class="btn btn-lg btn-primary mr-2">
+                    Create Team
+                </a>
+                <a href='{% url 'invite_user' %}' class="btn btn-lg btn-primary">
+                    Invite user
+                </a>
+            </div>
+
+            <div>
+                {% for team in invites %}
+                <div class="card shadow-sm border-0 rounded-lg mb-4">
+                    <div class="card-body">
+                        <p class="card-text">{{ team }}</p>
+                        <form method="post" action="{% url 'accept_invite' team.name %}" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" name="action" value="accept" class="btn btn-success mr-2">Accept</button>
+                        </form>
+
+                        <form method="post" action="{% url 'reject_invite' team.name %}" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" name="action" value="reject" class="btn btn-danger">Reject</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

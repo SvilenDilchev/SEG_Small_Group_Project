@@ -1,0 +1,18 @@
+{% extends 'base_content.html' %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h1>Sign up</h1>
+      <form action="{% url 'create_team' %}" method="post">
+        {% csrf_token %}
+        {% include 'partials/bootstrap_form.html' with form=form %}
+        <input type="submit" value="Create team" class="btn btn-primary">
+        <a href='{% url 'teams' %}' class="btn btn btn-secondary">
+                  Return to teams
+                  </a>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

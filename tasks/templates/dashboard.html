@@ -1,0 +1,65 @@
+{% extends 'base_content.html' %}
+{% block content %}
+<style>
+  .create-task-button{
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    color: #000000;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    vertical-align: central;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+  }
+  .create-task-button:hover{
+    background-color: #f5f5f5;
+    text-decoration: none;
+    color: #000000;
+  }
+  .grid-item-button{
+    padding: 30px;
+    width: 100%;
+    align-items: center;
+  }
+  * {
+    box-sizing: border-box
+  }
+</style>
+
+<div class="container justify-content-center">
+  <div class="row">
+    <div class="col-12">
+      <h1>Welcome to your dashboard {{ user.username }}</h1>
+    </div>
+  </div>
+
+  <div class ="justify-content-center text-center" style="display: grid; gap: 10px; grid-template-columns: repeat(2, 1fr);">
+    <div class="grid-item" style="margin-bottom: 20px;">
+      {% include 'partials/your_tasks.html' %}
+      <div class="grid-item-button">
+        <a class="create-task-button" href="{% url 'tasks' %}" id="tasksButton" role="button">
+          Create New Task
+        </a>
+      </div>
+    </div>
+    <div class="grid-item">
+      {% include 'partials/your_teams.html' %}
+      <div class="grid-item-button">
+        <a class="create-task-button" href="{% url 'create_team' %}" id="createTeam" role="button">
+          Create New Team
+        </a>
+      </div>
+      <div class="grid-item-button">
+        <a class="create-task-button" href="{% url 'invite_user' %}" id="inviteTeam" role="button">
+          Invite User
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}

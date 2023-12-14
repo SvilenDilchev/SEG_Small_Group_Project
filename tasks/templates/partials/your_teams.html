@@ -1,0 +1,96 @@
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    .header{
+        font-size: 30px;
+        margin-top: 30px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    ul {
+        list-style-type: none;
+
+    }
+
+</style>
+
+<p class="header">Your Teams</p>
+<table>
+    <thead>
+    <tr>
+        <th>Team Name</th>
+        <th>Description</th>
+        <th>Users</th>
+        <th></th>
+    </tr>
+    </thead>
+    {% for team in teams %}
+    <tr>
+        <td>{{ team.name }}</td>
+        <td>{{ team.description }}</td>
+        <td>
+            <ul>
+                {% for user in team.members.all %}
+                <li>{{ user.username }}</li>
+                {% endfor %}
+            </ul>
+        </td>
+        <td>
+            <a class="manage-task-button btn btn-danger" href="{% url 'leave_team' team_id=team.id %}">
+                Leave
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% if invites %}
+<p class="header">Your Invites</p>
+
+<table>
+    <thead>
+    <tr>
+        <th>Team Name</th>
+        <th>Description</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    {% for team in invites %}
+    <tr>
+        <td>{{ team.name }}</td>
+        <td>{{ team.description }}</td>
+        <td>
+            <a class="manage-task-button btn btn-primary" href="{% url 'accept_invite' team.name %}">
+                Accept
+            </a>
+        </td>
+        <td>
+            <a class="manage-task-button btn btn-primary" href="{% url 'reject_invite' team.name %}">
+                Reject
+            </a>
+        </td>
+
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}

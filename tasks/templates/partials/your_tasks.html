@@ -1,0 +1,104 @@
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    .doneTask{
+        background-color: #deebc5;
+    }
+
+    tr.doneTask:hover{
+        background-color: #d3e6ac;
+    }
+
+    .doneButton{
+
+    }
+
+    .yourTasks{
+        font-size: 30px;
+        margin-top: 30px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .manage-task-button{
+        background-color: #f2f2f2;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        color: #000000;
+        padding: 5px;
+    }
+
+</style>
+
+<p class="yourTasks">Your Tasks</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Due Date</th>
+        <th></th>
+    </tr>
+    </thead>
+    {% for k in data %}
+        <tr>
+            <td>{{ k.task_name }}</td>
+            <td>{{ k.description }}</td>
+            <td>{{ k.due_date }}</td>
+            <td>
+                <a class="manage-task-button btn btn-success doneButton">
+                    Done
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+
+<p class="yourTasks">Tasks You Made</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Due Date</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    {% for k in createdTasks %}
+        <tr>
+            <td>{{ k.task_name }}</td>
+            <td>{{ k.description }}</td>
+            <td>{{ k.due_date }}</td>
+            <td>
+                <a class="manage-task-button btn btn-primary" href="{% url 'edit_task' task_id=k.id %}">
+                    Edit
+                </a>
+            </td>
+            <td>
+                <a class="manage-task-button btn btn-danger" href="{% url 'dashboard_delete' task_id=k.id %}">
+                    Delete
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+
+</table>
